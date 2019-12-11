@@ -45,7 +45,7 @@ class EditPassword extends Controller {
         $newPassword = Controller::request('newPassword');
         $user = Controller::getLoggedUser() ;
 
-        if (Hashing::verifyPassword($oldPassword, $user->password)) {
+        if(!Hashing::verifyPassword(Controller::getLoggedUser()->email, $oldPassword)) {
             $user->password = Hashing::hashPassword($newPassword);
             $user->store();
 

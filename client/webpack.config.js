@@ -93,6 +93,7 @@ const config = env => {
                 {from: './src/assets/images', to: 'images'},
             ]),
             new BundleAnalyzerPlugin({
+                analyzerPort: 4000,
                 analyzerMode: process.env.NODE_ENV !== 'production' ? 'server' : 'disabled'
             }),
         ],

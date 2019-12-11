@@ -4,8 +4,24 @@ class Hashing {
         return password_hash($password, PASSWORD_DEFAULT);
     }
 
-    public static function verifyPassword($password, $hash) {
-        return password_verify($password, $hash);
+    public static function verifyPassword($email, $password) {
+//        return password_verify($password, $hash);
+        $url = 'http://localhost:8999/os/verify';
+        $ch = curl_init($url);
+
+        $data = array(
+            'email' => $email,
+            'password' => $password
+        );
+
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, Array("Content-Type: application/json", "Accept: application/json"));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return strpos($response,"success");
     }
 
     public static function generateRandomToken() {

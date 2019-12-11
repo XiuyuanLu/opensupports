@@ -35,7 +35,7 @@ class DisableRegistrationController extends Controller {
     public function handler() {
         $password = Controller::request('password');
 
-        if(!Hashing::verifyPassword($password, Controller::getLoggedUser()->password)) {
+        if(!Hashing::verifyPassword(Controller::getLoggedUser()->email, $password)) {
             throw new RequestException(ERRORS::INVALID_PASSWORD);
             return;
         }
